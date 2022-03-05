@@ -1,0 +1,39 @@
+
+body{
+    background-color: #7b2cbf;
+
+}
+.bg-color{
+    background-color: #7b2cbf;
+}
+
+.cus{
+    background-color: #dee2e6;
+}
+
+
+.zidx{
+    position: absolute;
+    z-index: -1;
+}
+
+
+
+@media (max-width: 576px) {
+
+    
+    .hid{
+        display: none!important;
+    }
+  }
+
+@media (max-width: 768px) { 
+    
+    .hid{
+        display: none!important;
+    }
+ }
+
+@media (min-width: 992px) { }
+
+@media (min-width: 1200px) {  }
