@@ -52,14 +52,19 @@
                                         <form>  
                                             <!-- Form -->
                                             <div class="mb-4">
+                                                <label class="form-label" for="shopname">Shop name</label>
+                                                <input type="text" class="form-control form-control-lg" name="shopname" id="registerName" placeholder="Enter Shop name"  required="">
+                                            </div>
+
+                                            <div class="mb-4">
                                               <label class="form-label" for="registerEmail">Email</label>
-                                              <input type="email" class="form-control form-control-lg" name="email" id="registerEmail" placeholder="Email" aria-label="example@site.com" required="" data-msg="Please enter a valid email address.">
+                                              <input type="email" class="form-control form-control-lg" name="email" id="registerEmail" placeholder="Enter Email" aria-label="example@site.com" required="" data-msg="Please enter a valid email address.">
                                               <div class="alert alert-warning" id="emailError" role="alert"> </div>
                                             </div>
     
                                             <div class="mb-4">
                                                 <label class="form-label" for="registerEmail">Password</label>
-                                                <input type="password" class="form-control form-control-lg" name="password" id="registerPassword" placeholder="Password" aria-label="Type your name" required="" data-msg="Please enter your name.">
+                                                <input type="password" class="form-control form-control-lg" name="password" id="registerPassword" placeholder="Enter Password" aria-label="Type your name" required="" data-msg="Please enter your name.">
                                                 <div class="alert alert-warning" id="passwordError" role="alert"> </div>
                                               </div>
                                             <!-- End Form -->
@@ -98,12 +103,13 @@
 
                 emailError.textContent = ' ';
                 passwordError.textContent = ' ';
+                const shopname = form.shopname.value;
                 const email = form.email.value;
-                const password = form.password.value
+                const password = form.password.value;
                  try{
                     const res = await fetch('/signup', {
                         method: 'POST',
-                        body: JSON.stringify({email, password}),
+                        body: JSON.stringify({shopname, email, password}),
                         headers: {'content-type': 'application/json'}
                         
                     });

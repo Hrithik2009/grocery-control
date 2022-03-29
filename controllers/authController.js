@@ -41,10 +41,10 @@ const signup_get = (req, res) => {
 }
 
 const signup_post =  async (req, res) => {
-    const {email, password} = req.body;
+    const {shopname, email, password} = req.body;
     // console.log(email, password);
     try{
-        const user = await User.create({email, password});
+        const user = await User.create({shopname, email, password});
         const token = createToken(user._id);
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000});
         res.status(201).json({user: user._id});
