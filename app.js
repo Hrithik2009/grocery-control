@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const authRoutes = require('./routes/authRoutes');
+const productRoutes = require('./routes/productRoutes');
 const connectDB = require('./db/connect');
 const cookieParser = require('cookie-parser');
 const {auths, checkUser} = require('./middleware/auth');
@@ -13,6 +14,7 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 
 app.use(authRoutes);
+app.use(productRoutes);
 
 app.get('/', auths, checkUser, (req, res) => res.render('dashbord'));
 app.get('/inventory', auths, (req, res) => res.render('inventory'));

@@ -18,7 +18,7 @@ const errorHandler = (err) => {
     if (err.code === 11000) {
         errors.email = 'that email is already registered';
         return errors;
-      }
+    }
 
     if(err.message.includes('users validation failed')){
         Object.values(err.errors).forEach(({properties}) => {
