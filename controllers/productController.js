@@ -8,12 +8,12 @@ const addProduct = async (req, res) => {
     const quantity = parseInt(req.body.quantity);
 
     try{
+        //const currentUser = user._id;
         // console.log(product_name, expiry_date, price, quantity);
         const product = await Product.create({product_name, expiry_date, price, quantity});
         res.status(200).json({product});
     }
     catch(err){
-        console.log(product_name, expiry_date, price, quantity);
         console.log(err);
     }
 };
