@@ -97,8 +97,8 @@
                       <td><%= item.price %></td>
                       <td><%= item.quantity %></td>
                       <td>
-                        <a href="#" class="btn btn-primary">Edit</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <a href="/editproduct/<%= item._id %>" class="btn btn-primary">Edit</a>
+                        <button type="button" class="btn btn-danger" onclick="deleteProduct('<%= item._id %>')">Delete</button>
                       </td>
                     </tr>
                     <% }); %>
@@ -133,6 +133,25 @@
             console.log(err);
           }
         });
+      </script>
+
+      <script>
+          function deleteProduct(productID){
+            fetch('/delproduct', {
+              method: 'DELETE',
+              body: JSON.stringify({productID}),
+              headers: { 'content-type': 'application/json' }
+
+            }).then(function (response){
+              if(response.ok){
+                location.assign('/products');
+                return
+              }
+              throw new Error('Request failed.')
+            }).catch (err => {
+               console.log(err);
+            });
+        }
       </script>
 
       <!-- JavaScript Bundle with Popper -->
