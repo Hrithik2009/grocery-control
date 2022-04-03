@@ -5,7 +5,9 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <!--offcanvas end-->
-  <a class="navbar-brand fs-3 fw-bolder" href="#">Grocery</a>
+  <% if(user) { %>
+    <a class="navbar-brand fs-3 fw-bolder" href="#">Welcome, <%= user.shopname %></a>
+  <% } %>
   <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse"
     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
     aria-label="Toggle navigation">

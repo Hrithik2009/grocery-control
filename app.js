@@ -16,10 +16,11 @@ app.set('view engine', 'ejs');
 app.use(authRoutes);
 app.use(productRoutes);
 
-app.get('/', auths, checkUser, (req, res) => res.render('dashbord'));
-app.get('/inventory', auths, (req, res) => res.render('inventory'));
-app.get('/sales', auths, (req, res) => res.render('sales'));
-app.get('/products', auths, (req, res) => res.render('products'));
+app.use('*', auths);
+app.use('*', checkUser);
+app.get('/', (req, res) => res.render('dashbord'));
+app.get('/inventory', (req, res) => res.render('inventory'));
+app.get('/sales', (req, res) => res.render('sales'));
 
 const port = 5000;
 const start = async() => {

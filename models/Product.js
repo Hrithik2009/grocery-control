@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-    shop_id: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User'
+    shop_name: {
+        type: String
     },
     product_name: {
         type: String,
+        unique: true,
         required: [true, 'Pls enter product name']
     },
     expiry_date:{

@@ -31,7 +31,8 @@
             <div class="card">
               <div class="card-header d-flex justify-content-end">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal">
                   <i class="fas fa-plus-square m-1"></i>New Product
                 </button>
 
@@ -44,7 +45,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        <form method="">
+                        <form>
                           <div class="mb-3">
                             <label for="pname" class="form-label text-capitalize">Enter product name</label>
                             <input type="text" name="product_name" id="pname" class="form-control"
@@ -64,10 +65,10 @@
                             <label for="qty" class="form-label text-capitalize">Quantity</label>
                             <input type="text" name="qty" id="qty" class="form-control" placeholder="Quantity" required>
                           </div>
+                          <div class="modal-footer d-block">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                          </div>
                         </form>
-                      </div>
-                      <div class="modal-footer d-block">
-                        <button type="submit" class="btn btn-success">Submit</button>
                       </div>
                     </div>
                   </div>
@@ -87,29 +88,20 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <% let index = 1 %>
+                    <% product.forEach((item) => { %>
                     <tr>
-                      <th scope="row">1</th>
-                      <td>Biscuits</td>
-                      <td>02/22</td>
-                      <td>20</td>
-                      <td>40</td>
-                      <td>
-                        <a href="#" class="btn btn-primary">Edit</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
-                      </td>
-
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Milk</td>
-                      <td>10/22</td>
-                      <td>40</td>
-                      <td>60</td>
+                      <th scope="row"><%= index++ %></th>
+                      <td><%= item.product_name %></td>
+                      <td><%= item.expiry_date %></td>
+                      <td><%= item.price %></td>
+                      <td><%= item.quantity %></td>
                       <td>
                         <a href="#" class="btn btn-primary">Edit</a>
                         <a href="#" class="btn btn-danger">Delete</a>
                       </td>
                     </tr>
+                    <% }); %>
                   </tbody>
                 </table>
               </div>
@@ -126,20 +118,16 @@
           const product_name = form.product_name.value;
           const expiry_date = form.expiry_date.value;
           const price = form.price.value;
-          const qty = form.qty.value;
-
+          const quantity = form.qty.value;
+          //console.log(product_name, expiry_date, price, qty);
           try {
             const res = await fetch('/addproducts', {
               method: 'POST',
-              body: JSON.stringify({ product_name, expiry_date, price, qty }),
+              body: JSON.stringify({ product_name, expiry_date, price, quantity }),
               headers: { 'content-type': 'application/json' }
-            });
-            const data = await res.json();
-            console.log(data);
 
-            if (data) {
-              location.assign('/products');
-            }
+            });
+            location.assign('/products');
           }
           catch (err) {
             console.log(err);
