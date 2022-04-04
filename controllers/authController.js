@@ -12,7 +12,7 @@ const errorHandler = (err) => {
     }
 
     if(err.message == 'incorrect password'){
-        errors.email = 'Entered password is wrong';
+        errors.password = 'Entered password is wrong';
     }
 
     if (err.code === 11000) {

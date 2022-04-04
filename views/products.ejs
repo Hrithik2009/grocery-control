@@ -50,6 +50,7 @@
                             <label for="pname" class="form-label text-capitalize">Enter product name</label>
                             <input type="text" name="product_name" id="pname" class="form-control"
                               placeholder="Enter Name of product" required>
+                              <div class="alert alert-warning" id="nameError" role="alert"></div>
                           </div>
                           <div class="mb-3">
                             <label for="ptype" class="form-label text-capitalize">Expiry Date</label>
@@ -113,6 +114,7 @@
 
       <script>
         const form = document.querySelector('form');
+        nameError.style.display = "none";
         form.addEventListener('submit', async (e) => {
           e.preventDefault();
           const product_name = form.product_name.value;
@@ -127,7 +129,14 @@
               headers: { 'content-type': 'application/json' }
 
             });
-            location.assign('/products');
+            const data = await res.json();
+            if(data.err){
+              nameError.style.display = "block";
+              nameError.textContent = data.err;
+            }
+            else {
+              location.assign('/products');
+            }
           }
           catch (err) {
             console.log(err);
