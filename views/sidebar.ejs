@@ -3,39 +3,141 @@
 
   <div class="offcanvas-body p-0">
 
+    <% if(user.role === "admin") { %>
     <nav class="navbar-dark mt-3">
       <div class="text-white small fw-bold text-uppercase px-3">
         Menu
       </div>
-      <a href="/" class="nav-link px-3 active">
+      <a href="/admin/dashboard" class="nav-link px-3 active">
         <span class="me-2 text-white">
           <i class="fas fa-chart-line"></i>
         </span>
         <span class="text-light text-capitalize">Dashboard</span>
       </a>
 
-      <a href="/inventory" class="nav-link px-3">
+      <a href="/admin/add_shop" class="nav-link px-3">
         <span class="me-2 text-white">
           <i class="fas fa-boxes"></i>
         </span>
-        <span class="text-light text-capitalize">Inventory</span>
+        <span class="text-light text-capitalize">Add Shop</span>
       </a>
-
-      <a href="/sales" class="nav-link px-3">
+      <a href="#" class="nav-link px-3">
         <span class="me-2 text-white">
           <i class="fas fa-capsules"></i>
         </span>
-        <span class="text-light text-capitalize">Sales</span>
+        <span class="text-light text-capitalize">View All Shops</span>
       </a>
 
-
-      <a href="/products" class="nav-link px-3">
+      <a href="/admin/sales" class="nav-link px-3">
         <span class="me-2 text-white">
-          <i class="fas fa-list"></i>
+          <i class="fas fa-capsules"></i>
         </span>
-        <span class="text-light text-capitalize">Products</span>
+        <span class="text-light text-capitalize">Sales Analytics</span>
       </a>
 
-    </nav>
+    <% } else if(user.role === "owner") { %>
+
+      <nav class="navbar-dark mt-3">
+        <div class="text-white small fw-bold text-uppercase px-3">
+          Menu
+        </div>
+        <a href="/owner/dashboard" class="nav-link px-3 active">
+          <span class="me-2 text-white">
+            <i class="fas fa-chart-line"></i>
+          </span>
+          <span class="text-light text-capitalize">Dashboard</span>
+        </a>
+  
+        <a href="/owner/add_employee" class="nav-link px-3">
+          <span class="me-2 text-white">
+            <i class="fas fa-boxes"></i>
+          </span>
+          <span class="text-light text-capitalize">Add Employees</span>
+        </a>
+
+        <a href="#" class="nav-link px-3">
+          <span class="me-2 text-white">
+            <i class="fas fa-boxes"></i>
+          </span>
+          <span class="text-light text-capitalize">View All Employees</span>
+        </a>
+  
+        <a href="/owner/sales" class="nav-link px-3">
+          <span class="me-2 text-white">
+            <i class="fas fa-capsules"></i>
+          </span>
+          <span class="text-light text-capitalize">Sales Analytics</span>
+        </a>
+  
+        <a href="/owner/products" class="nav-link px-3">
+          <span class="me-2 text-white">
+            <i class="fas fa-list"></i>
+          </span>
+          <span class="text-light text-capitalize">Products</span>
+        </a>
+
+        <a href="#" class="nav-link px-3">
+          <span class="me-2 text-white">
+            <i class="fas fa-list"></i>
+          </span>
+          <span class="text-light text-capitalize">View Profile</span>
+        </a>
+  
+      </nav>
+
+    <% } else { %>
+
+      <nav class="navbar-dark mt-3">
+        <div class="text-white small fw-bold text-uppercase px-3">
+          Menu
+        </div>
+        <a href="/employee/dashboard" class="nav-link px-3 active">
+          <span class="me-2 text-white">
+            <i class="fas fa-chart-line"></i>
+          </span>
+          <span class="text-light text-capitalize">Dashboard</span>
+        </a>
+        <a href="#" class="nav-link px-3 active">
+          <span class="me-2 text-white">
+            <i class="fas fa-chart-line"></i>
+          </span>
+          <span class="text-light text-capitalize">Checkout Order</span>
+        </a>
+        <a href="#" class="nav-link px-3 active">
+          <span class="me-2 text-white">
+            <i class="fas fa-chart-line"></i>
+          </span>
+          <span class="text-light text-capitalize">View Orders</span>
+        </a>
+
+        <a href="#" class="nav-link px-3 active">
+          <span class="me-2 text-white">
+            <i class="fas fa-chart-line"></i>
+          </span>
+          <span class="text-light text-capitalize">View Profile</span>
+        </a>
+        <!-- <a href="/employee/inventory" class="nav-link px-3">
+          <span class="me-2 text-white">
+            <i class="fas fa-boxes"></i>
+          </span>
+          <span class="text-light text-capitalize">Add Shop</span>
+        </a>
+  
+        <a href="/employee/sales" class="nav-link px-3">
+          <span class="me-2 text-white">
+            <i class="fas fa-capsules"></i>
+          </span>
+          <span class="text-light text-capitalize">Sales</span>
+        </a>
+
+        <a href="/products" class="nav-link px-3">
+          <span class="me-2 text-white">
+            <i class="fas fa-list"></i>
+          </span>
+          <span class="text-light text-capitalize">Products</span>
+        </a> -->
+      </nav>
+    <% } %>
+
   </div>
 </div>

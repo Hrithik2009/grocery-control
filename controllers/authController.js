@@ -1,5 +1,8 @@
 const { object } = require('webidl-conversions');
-const User = require('../models/User');
+// const User = require('../models/User');
+const Admin = require('../models/Admin');
+const Owner = require('../models/Owner');
+const Employee = require('../models/Employee');
 const jwt = require('jsonwebtoken');
 
 
@@ -30,8 +33,8 @@ const errorHandler = (err) => {
 }
 
 const maxAge = 3 * 24 * 60 * 60; // in secs
-const createToken = (id) => {
-    return jwt.sign({id}, 'Secret', {
+const createToken = (id,role) => {
+    return jwt.sign({id,role}, 'Secret', {
         expiresIn: maxAge
     });
 }
@@ -41,13 +44,13 @@ const signup_get = (req, res) => {
 }
 
 const signup_post =  async (req, res) => {
-    const {shopname, email, password} = req.body;
+    const {name, email, password} = req.body;
     // console.log(email, password);
     try{
-        const user = await User.create({shopname, email, password});
-        const token = createToken(user._id);
+        const admin = await Admin.create({name, email, password});
+        const token = createToken(admin._id);
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000});
-        res.status(201).json({user: user._id});
+        res.status(201).json({user: admin._id});
     }
     catch(err){
         const errors = errorHandler(err);
@@ -60,15 +63,22 @@ const login_get = (req, res) => {
 }
 
 const login_post = async (req, res) => {
-    const {email, password} = req.body;
-
+    const {email,password,role} = req.body;
+    // console.log(req.body);
     try{
-        const user = await User.login(email, password);
-        const token = createToken(user._id);
+        let user;
+        if(role === "admin") 
+            user = await Admin.login(email, password);
+        else if(role === "owner")
+            user = await Owner.login(email, password);
+        else 
+            user = await Employee.login(email, password);
+        const token = createToken(user._id,user.role);
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000});
-        res.status(200).json({user: user._id});
+        res.status(200).json({user: user._id,role:user.role});
     }
     catch(err){
+        console.log(err);
         const errors = errorHandler(err);
         res.status(400).json({errors});
     }

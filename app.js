@@ -17,10 +17,17 @@ app.use(authRoutes);
 app.use(productRoutes);
 
 app.use('*', auths);
-app.use('*', checkUser);
-app.get('/', (req, res) => res.render('dashbord'));
-app.get('/inventory', (req, res) => res.render('inventory'));
-app.get('/sales', (req, res) => res.render('sales'));
+// app.use('*', checkUser);
+app.get('/', (req, res) => {
+    res.send("Landing Page Here");
+});
+app.use('/employee',require('./routes/employeeRoutes'));
+app.use('/owner',require('./routes/ownerRoutes'));
+app.use('/admin',require('./routes/adminRoutes'));
+// app.get('/', (req, res) => res.render('dashbord'));
+// app.get('/inventory', (req, res) => res.render('inventory'));
+// app.get('/sales', (req, res) => res.render('sales'));
+
 
 const port = 5000;
 const start = async() => {

@@ -17,6 +17,11 @@ body{
     z-index: -1;
 }
 
+.roles{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly
+}
 
 
 @media (max-width: 576px) {

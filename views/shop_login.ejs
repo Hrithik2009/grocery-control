@@ -69,7 +69,27 @@
                                     <div class="alert alert-warning" id="passwordError" role="alert"> </div>
                                 </div>
                                 <!-- End Form -->
-
+                                <label class="form-label" for="role">Choose Your Role</label>
+                                <div class="roles">
+                                    <div class="mb-4 form-check">
+                                        <input class="form-check-input" name="role" type="radio" value="admin"  id="flexRadioDefault1" checked>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                        Super Admin
+                                        </label>
+                                    </div>
+                                    <div class=" mb-4 form-check">
+                                        <input class="form-check-input" name="role" type="radio" value="owner"  id="flexRadioDefault2" >
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                        Shop Owner
+                                        </label>
+                                    </div>
+                                    <div class=" mb-4 form-check">
+                                        <input class="form-check-input" name="role" type="radio" value="employee"  id="flexRadioDefault2" >
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                        Employee
+                                        </label>
+                                    </div>
+                                </div>
 
                                 <div class="d-grid text-center">
                                     <button type="submit" class="btn text-white btn-lg bg-color">Login</button>
@@ -100,10 +120,11 @@
                 passwordError.textContent = ' ';
                 const email = form.email.value;
                 const password = form.password.value
+                const role = form.role.value
                 try {
                     const res = await fetch('/login', {
                         method: 'POST',
-                        body: JSON.stringify({ email, password }),
+                        body: JSON.stringify({ email, password,role }),
                         headers: { 'content-type': 'application/json' }
 
                     });
@@ -118,8 +139,16 @@
                             passwordError.textContent = data.errors.password;
                         }
                     }
-                    if (data.user) {
-                        location.assign('/')
+                    if(data.user){
+                        if (role === "owner") {
+                            location.assign('/owner/dashboard')
+                        }
+                        else if(role === "admin"){
+                            location.assign('/admin/dashboard')
+                        }
+                        else{
+                            location.assign('/employee/dashboard')
+                        }
                     }
                 }
                 catch (err) {

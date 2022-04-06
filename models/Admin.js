@@ -3,10 +3,10 @@ const {isEmail} = require('validator');
 
 const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema({
-    shopname: {
+const adminSchema = new mongoose.Schema({
+    name:{
         type: String,
-        required: [true, 'Please enter shop name'],
+        required: [true, 'Pls enter name']
     },
     email: {
         type: String,
@@ -19,11 +19,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter a passoword'],
         minlength: [6, 'You must enter a passowrd of atleast 6 characters'],
+    },
+    role:{
+        type: String,
+        default:'admin'
     }
 });
 
 
-userSchema.pre('save', async function(next) {
+adminSchema.pre('save', async function(next) {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
     next();
@@ -34,16 +38,16 @@ userSchema.pre('save', async function(next) {
 //     next();
 // })
 
-userSchema.statics.login = async function(email, password){
-    const user = await this.findOne({email});
-    if(user){
-        const res = await bcrypt.compare(password, user.password);
+adminSchema.statics.login = async function(email, password){
+    const admin = await this.findOne({email});
+    if(admin){
+        const res = await bcrypt.compare(password, admin.password);
         if(res){
-            return user;
+            return admin;
         }
         throw Error('incorrect password');
     }
     throw Error('incorrect email');
 };
 
-module.exports = mongoose.model('users', userSchema);
+module.exports = mongoose.model('admins', adminSchema);

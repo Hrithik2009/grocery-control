@@ -6,7 +6,7 @@
   </button>
   <!--offcanvas end-->
   <% if(user) { %>
-    <a class="navbar-brand fs-3 fw-bolder" href="#">Welcome, <%= user.shopname %></a>
+    <a class="navbar-brand fs-3 fw-bolder" href="#">Welcome, <%= user.name %></a>
   <% } %>
   <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse"
     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -21,6 +21,8 @@
         <i class="fas fa-user"></i>
       </button>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
+        <li><a class="dropdown-item " ><%=user.name%></a></li>
+        <li><a class="dropdown-item " ><%=user.email%></a></li>
         <li><a class="dropdown-item active" href="/logout">Logout</a></li>
       </ul>
     </div>
