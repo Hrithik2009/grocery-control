@@ -23,7 +23,7 @@ const errorHandler = (err) => {
         return errors;
     }
 
-    if(err.message.includes('users validation failed')){
+    if(err.message.includes('admins validation failed')){
         Object.values(err.errors).forEach(({properties}) => {
             errors[properties.path] = properties.message;
         });
@@ -53,6 +53,7 @@ const signup_post =  async (req, res) => {
         res.status(201).json({user: admin._id});
     }
     catch(err){
+        console.log(err.message);
         const errors = errorHandler(err);
         res.status(400).json({errors});
     }
