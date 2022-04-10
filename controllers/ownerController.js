@@ -86,4 +86,33 @@ const add_employee_post = async (req, res) => {
     }
 }
 
-module.exports = {owner_dashboard,owner_inventory,owner_sales,add_employee_get,add_employee_post}
+const view_employees = async (req,res) => {
+    try{
+        const data = await Employee.find({},{_id:0,admin_id:0});
+        res.render('view_employees',{employee:data});
+    }
+    catch(err){
+        console.log("Inside Error ",err);
+        res.status(500).json({
+            status:"failure",
+            err: err
+        })
+    }
+}
+
+const view_owner_profile = async (req,res) => {
+    try{
+        const data = await Owner.findOne({_id:res.locals.user._id},{_id:0});
+        res.render('view_owner_profile',{owner:data});
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({
+            status:"failure",
+            err: err
+        })
+    }
+}
+
+
+module.exports = {owner_dashboard,owner_inventory,owner_sales,add_employee_get,add_employee_post,view_employees,view_owner_profile}

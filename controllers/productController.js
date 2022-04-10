@@ -1,4 +1,5 @@
 const req = require('express/lib/request');
+const Employee = require('../models/Employee');
 const Product = require('../models/Product');
 
 const getProducts = async(req, res) => {
@@ -70,5 +71,6 @@ const deleteProduct = async(req, res) => {
         res.status(500).json({msg: err});
     }
 }
+
 
 module.exports = {addProduct, getProducts, getEditproduct, editproduct, deleteProduct};

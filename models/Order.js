@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const {isEmail} = require('validator');
 
-const productSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     admin_id:{
         type:mongoose.Types.ObjectId,
         required:true
@@ -11,25 +11,28 @@ const productSchema = new mongoose.Schema({
         required: true,
         validate: [isEmail, 'Please enter a valid email']
     },
-    product_name: {
-        type: String,
-        required: [true, 'Pls enter product name']
+    employee_id:{
+        type:mongoose.Types.ObjectId,
+        required:true
     },
-    expiry_date:{
+    customer_name:{
         type: String,
-        required: [true, 'Pls enter the date']
+        required: [true, 'Pls enter customer name']
     },
-    price: {
+    customer_contact:{
+        type: String,
+        required: [true, 'Pls enter customer contact']
+    },
+    products: {
+        type: Array
+    },
+    total_price: {
         type: Number,
         required: [true, 'Pls enter the price']
     },
-    quantity: {
-        type: String,
-        required: [true, 'Pls enter quantity']
-    },
-    availability:{
-        type: Boolean
+    total_items:{
+        type: Number
     }
 });
 
-module.exports = mongoose.model('products', productSchema);
+module.exports = mongoose.model('orders', orderSchema);
