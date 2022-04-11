@@ -10,5 +10,6 @@ router.get('/checkout_order',auths,checkEmployee,employeeController.checkout_ord
 router.post('/checkout_order',auths,checkEmployee,employeeController.checkout_order_post);
 router.get('/view_orders',auths,checkEmployee,employeeController.view_orders);
 router.get('/view_profile',auths,checkEmployee,employeeController.view_profile);
+router.get('/dashboard/stats',auths,checkEmployee,employeeController.employee_dashboard_stats);
 
 module.exports = router;

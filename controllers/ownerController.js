@@ -1,7 +1,8 @@
 const Admin = require('../models/Admin');
 const Employee = require('../models/Employee');
 const Owner = require('../models/Owner');
-
+const Order = require('../models/Order');
+const Product = require('../models/Product');
 const owner_dashboard = async (req, res) => {
     try{
         let user = {
@@ -9,7 +10,23 @@ const owner_dashboard = async (req, res) => {
             email: res.locals.user.email,
             role: res.locals.user.role
         }
-        res.render('owner_dashboard',{user:user});
+        let total_employees = await Employee.find({shop_email:res.locals.user.shop_email});
+        total_employees = total_employees.length;
+        // let total_orders = await Order.find({shop_email:res.locals.user.shop_email});
+        // total_orders = total_orders.length;
+        let total_products = await Product.find({shop_email:res.locals.user.shop_email});
+        total_products = total_products.length;
+        let all_orders = await Order.find({shop_email:res.locals.user.shop_email});
+        let all_time_sales = 0;
+        for(var i = 0;i < all_orders.length;i++) {
+            all_time_sales += all_orders[i].total_price;
+        }
+        res.render('owner_dashboard',{
+            user:user,
+            total_employees:total_employees,
+            total_products:total_products,
+            all_time_sales:all_time_sales
+        });
     }
     catch(err){
         console.log(err);
@@ -52,6 +69,7 @@ const owner_sales = async (req, res) => {
         });
     }
 }
+
 const add_employee_get = async (req, res) => {
     try{
         res.render('add_employee');
@@ -114,5 +132,53 @@ const view_owner_profile = async (req,res) => {
     }
 }
 
+const owner_dashboard_stats = async (req, res) => {
+    try{
+        let employees = await Employee.find({shop_email:res.locals.user.shop_email});
+        let labels = []
+        let e_id = []
+        let datasets = []
+        for(var i = 0;i < employees.length;i++){
+            labels.push(employees[i].name);
+            e_id.push(employees[i]._id);
+        }
+        let data = []
+        for(var i = 0;i < labels.length;i++){
+           let order_per_emp = await Order.find({employee_id:e_id[i]});
+           let sales = 0;
+           for(var j = 0;j < order_per_emp.length;j++){
+                sales += order_per_emp[j].total_price;
+           }
+           data.push(sales);
+        }
+        let backgroundColor = [];
+        for(var i = 0;i < labels.length;i++){
+            backgroundColor.push(randomColor());
+        }
+        datasets.push({
+            label:'Sales Per Employee in RS',
+            data:data,
+            backgroundColor:backgroundColor
+        });
+        res.json({
+            labels:labels,
+            datasets:datasets
+        });
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({
+            err: err
+        });
+    }
+}
 
-module.exports = {owner_dashboard,owner_inventory,owner_sales,add_employee_get,add_employee_post,view_employees,view_owner_profile}
+// Function for Generating Random RGB color
+function randomColor(){
+    return `rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`
+}
+
+
+
+module.exports = {owner_dashboard,owner_inventory,owner_sales,add_employee_get,add_employee_post,view_employees,view_owner_profile,
+    owner_dashboard_stats}
