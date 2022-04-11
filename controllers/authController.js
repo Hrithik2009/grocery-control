@@ -53,6 +53,7 @@ const signup_post =  async (req, res) => {
         res.status(201).json({user: admin._id});
     }
     catch(err){
+        console.log(err.message);
         const errors = errorHandler(err);
         res.status(400).json({errors});
     }
