@@ -23,7 +23,7 @@ const errorHandler = (err) => {
         return errors;
     }
 
-    if(err.message.includes('users validation failed')){
+    if(err.message.includes('admins validation failed')){
         Object.values(err.errors).forEach(({properties}) => {
             errors[properties.path] = properties.message;
         });
